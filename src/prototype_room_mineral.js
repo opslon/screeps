@@ -1,5 +1,17 @@
 'use strict';
 
+Room.prototype.isMineralInStorage = function() {
+  let mineralInStorage = false;
+  for (let resource in this.storage.store) {
+    if (resource === 'energy' || resource === 'power') {
+      continue;
+    }
+    mineralInStorage = true;
+    break;
+  }
+  return mineralInStorage;
+};
+
 Room.prototype.getNextReaction = function() {
   for (let mineralFirst in this.terminal.store) {
     if (!REACTIONS[mineralFirst]) {
