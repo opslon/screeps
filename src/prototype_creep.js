@@ -188,6 +188,11 @@ Creep.prototype.buildRoad = function() {
       (this.room.controller.level < 3 || this.room.memory.misplacedSpawn)) {
       return false;
     }
+
+    // TODO this mainly fixes that harvesters don't build random roads, better solved in buildRoads or by pathing of harvester
+    if (!this.room.storage || this.room.storage.store.energy < config.creep.energyFromStorageThreshold + 5000) {
+      return false;
+    }
   }
 
   // TODO as creep variable
