@@ -70,16 +70,6 @@ Creep.prototype.handle = function() {
       }
     }
 
-    // TODO this happens when the creep is not on the path (maybe pathPos check will solve)
-    if (unit.buildRoad) {
-      if (this.memory.routing && !this.memory.routing.reached) {
-        const target = Game.getObjectById(this.memory.routing.targetId);
-        if (config.buildRoad.buildToOtherMyRoom || !target || target.structureType !== STRUCTURE_STORAGE) {
-          this.buildRoad();
-        }
-      }
-    }
-
     if (!this.memory.boosted) {
       if (this.boost()) {
         return true;
@@ -186,11 +176,6 @@ Creep.prototype.buildRoad = function() {
 
     if (this.pos.lookFor(LOOK_TERRAIN)[0] !== 'swamp' &&
       (this.room.controller.level < 3 || this.room.memory.misplacedSpawn)) {
-      return false;
-    }
-
-    // TODO this mainly fixes that harvesters don't build random roads, better solved in buildRoads or by pathing of harvester
-    if (!this.room.storage || this.room.storage.store.energy < config.creep.energyFromStorageThreshold + 5000) {
       return false;
     }
   }
